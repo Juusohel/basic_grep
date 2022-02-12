@@ -10,8 +10,12 @@ fn main() {
 
     println!("Searching for {} in {}", config.query, config.filename);
 
+    run(config)
+}
+
+fn run(config: Config) {
     let contents = fs::read_to_string(config.filename)
-        .expect("Error reading the file"); //reading file
+        .expect("Error reading the file");
 
     println!("Text: \n{}", contents);
 }
