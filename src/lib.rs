@@ -22,10 +22,9 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
         .lines()
         .filter(|line| line.contains(query))
         .collect()
-
 }
 
-pub fn search_case_insensitive<'a>(query: &str, contents: &'a str,) -> Vec<&'a str> {
+pub fn search_case_insensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     contents
         .lines()
         .filter(|line| line.to_lowercase().contains(&query.to_lowercase()))
@@ -44,18 +43,21 @@ impl Config {
 
         let query = match args.next() {
             Some(arg) => arg,
-            None => return Err("No query string found")
+            None => return Err("No query string found"),
         };
         let filename = match args.next() {
             Some(arg) => arg,
-            None => return Err("No file name found")
+            None => return Err("No file name found"),
         };
 
         let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
 
-        Ok(Config { query, filename, case_sensitive})
+        Ok(Config {
+            query,
+            filename,
+            case_sensitive,
+        })
     }
-
 }
 
 #[cfg(test)]
@@ -83,7 +85,9 @@ safe, fast, productive.
 Pick three.
 Trust me.";
 
-        assert_eq!(vec!["Rust:", "Trust me."], search_case_insensitive(query, contents));
+        assert_eq!(
+            vec!["Rust:", "Trust me."],
+            search_case_insensitive(query, contents)
+        );
     }
-
 }
