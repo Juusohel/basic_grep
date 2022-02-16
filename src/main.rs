@@ -2,8 +2,7 @@ use std::{env, process};
 use basic_grep::Config;
 
 fn main() {
-    let args: Vec<String> = env::args().collect(); //collecting commandline arguments to Vec
-    let config = Config::new(&args).unwrap_or_else(|err|{
+    let config = Config::new(env::args()).unwrap_or_else(|err|{
         eprintln!("Problem with arguments provided: {}", err);
         process::exit(1)
     });
